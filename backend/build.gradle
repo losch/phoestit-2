@@ -1,0 +1,28 @@
+group 'phoestit-2'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'kotlin2js'
+
+repositories {
+    mavenCentral()
+    maven {
+        url "http://dl.bintray.com/kotlin/kotlin-js-wrappers"
+    }
+}
+
+dependencies {
+    compile "org.jetbrains.kotlin:kotlin-stdlib-js:$kotlin_version"
+}
+
+sourceSets {
+    main {
+        output.resourcesDir = file("$project.buildDir.path/js")
+    }
+}
+
+compileKotlin2Js.kotlinOptions {
+    metaInfo = true
+    moduleKind = "commonjs"
+    outputFile = "$project.buildDir.path/js/index.js"
+    sourceMap = true
+}

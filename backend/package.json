@@ -1,0 +1,26 @@
+{
+  "name": "phoestit-2",
+  "version": "1.0.0",
+  "description": "Note board application",
+  "main": "index.js",
+  "author": "Ilari Nummila",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "@types/knex": "^0.0.67",
+    "body-parser": "^1.18.2",
+    "express": "^4.16.2",
+    "knex": "^0.14.2",
+    "kotlin": "^1.2.10",
+    "md5-file": "^3.2.3",
+    "pug": "^2.0.0-rc.4",
+    "socket.io": "^2.0.4",
+    "sqlite3": "^3.1.13"
+  },
+  "scripts": {
+    "start": "cd build/js && node index"
+  },
+  "devDependencies": {
+    "ts2kt": "^0.0.20"
+  }
+}

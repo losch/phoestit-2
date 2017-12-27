@@ -1,0 +1,17 @@
+build
+
+# Frontend
+
+frontend/node_modules
+frontend/build
+
+# Backend
+
+backend/node_modules
+backend/build
+backend/db.sqlite
+
+# Misc
+
+.idea
+.gradle

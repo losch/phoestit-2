@@ -1,0 +1,4 @@
+rootProject.name = 'phoestit-2'
+
+include 'backend'
+include 'frontend'

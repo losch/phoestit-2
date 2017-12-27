@@ -1,0 +1,10 @@
+html
+  head
+    title= "Phöst-it 2"
+  body
+    div#app
+
+    script.
+      var initialData = !{JSON.stringify(initialData).replace(/<\//g, "<\\/")};
+
+    script(src= bundle)
