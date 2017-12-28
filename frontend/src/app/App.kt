@@ -61,7 +61,7 @@ class App : RComponent<RProps, RState>() {
                 }
             }
 
-            +"Luo uusi"
+            +"Uusi lappu"
         }
     }
 }

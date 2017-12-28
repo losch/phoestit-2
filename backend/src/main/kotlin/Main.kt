@@ -43,24 +43,34 @@ fun main(args: Array<String>) {
                 noteService.findNoteById(id)
             }
             .then { newNote ->
-                socket.broadcast.emit("note_created", newNote)
+                socket.broadcast.emit("create_note", newNote)
                 socket.emit("create_note", newNote)
             }
         })
 
         socket.on("update_note", { note ->
             noteService.updateNote(note.id, note).then { newNote ->
-                console.log("${socket.handshake.address} updated note $note")
+                console.log("${socket.handshake.address} updated note", note)
                 socket.broadcast.emit("update_note", newNote)
             }
         })
 
         socket.on("update_note_contents", { note ->
-            noteService.updateNoteContents(note.id, note.contents).then { newNote ->
-                console.log("${socket.handshake.address} updated note $note")
+            noteService.updateNoteContents(note.id, note.contents).then {
+                console.log("${socket.handshake.address} updated note", note)
+                noteService.findNoteById(note.id)
+                           .then { note ->
+                               socket.broadcast.emit("update_note", note)
+                               socket.emit("update_note", note)
+                           }
+            }
+        })
+
+        socket.on("move_note", { note ->
+            console.log("${socket.handshake.address} moved note", note)
+            noteService.moveNote(note.id, note.x, note.y, note.width, note.height).then {
                 noteService.findNoteById(note.id)
                         .then { note ->
-                            console.log("*** broadcastin", note)
                             socket.broadcast.emit("update_note", note)
                             socket.emit("update_note", note)
                         }

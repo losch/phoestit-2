@@ -14,6 +14,9 @@ class NoteService (private val noteRepository: NoteRepository) {
 
     fun updateNoteContents(id: Int, contents: String): Promise<Note> = noteRepository.updateNoteContents(id, contents)
 
+    fun moveNote(id: Int, x: Int, y: Int, width: Int, height: Int): Promise<Int> =
+            noteRepository.moveNote(id, x, y, width, height)
+
     fun deleteNote(id: Int): Promise<Int> = noteRepository.deleteNote(id)
 
     fun updateNoteByApiId(apiId: String, contents: String): Promise<Note> =

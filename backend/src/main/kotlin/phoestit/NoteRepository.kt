@@ -32,13 +32,20 @@ class NoteRepository {
         knex("notes")
             .where(json("id" to id))
             .update(note)
-            .returning("*")
 
     fun updateNoteContents(id: Int, contents: String): Promise<Note> =
         knex("notes")
             .where(json("id" to id))
             .update(json("contents" to contents))
-            .returning("*")
+
+    fun moveNote(id: Int, x: Int, y: Int, width: Int, height: Int): Promise<Int> =
+        knex("notes")
+            .where(json("id" to id))
+            .update(json("x" to x,
+                         "y" to y,
+                         "width" to width,
+                         "height" to height))
+            .then { ids -> ids[0] }
 
     fun deleteNote(id: Int): Promise<Int> =
         knex("notes")

@@ -27,15 +27,21 @@ body {
 }
 
 .CreateNoteButton {
-    position: absolute;
+    position: fixed;
     right: 5px;
     bottom: 5px;
 }
 
 .NoteButtons {
+    visibility: hidden;
     position: absolute;
     right: 5px;
     top: 5px;
+}
+
+.Note:hover .NoteButtons,
+.Note:hover .NoteDragHandle {
+    visibility: visible;
 }
 
 .DeleteNotebutton {
@@ -43,5 +49,20 @@ body {
 }
 
 .NoteContents {
+}
 
+.NoteDragHandle {
+  visibility: hidden;
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  bottom: 3px;
+  left: 3px;
+  background: gray;
+  background-position: bottom right;
+  padding: 0 5px 5px 0;
+  background-repeat: no-repeat;
+  background-origin: content-box;
+  box-sizing: border-box;
+  cursor: move;
 }
