@@ -1,6 +1,6 @@
 @file:Suppress("UnsafeCastFromDynamic")
 
-package phoestit.store
+package store
 
 external fun require(module:String): dynamic
 

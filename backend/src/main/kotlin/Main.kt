@@ -9,10 +9,6 @@ val noteService = NoteService(noteRepository)
 
 fun main(args: Array<String>) {
 
-    // Bundle's path with cache buster parameter
-    val md5file = require("md5-file")
-    val bundle = "bundle.js?v=${md5file.sync("public/bundle.js")}"
-
     val express = require("express")
     val app = express()
 
@@ -29,22 +25,6 @@ fun main(args: Array<String>) {
     // Bodyparser for handling post body data
     val bodyParser = require("body-parser")
     app.use(bodyParser.json())
-
-    /**
-     * Index page. Returns initial data for the client.
-     */
-    app.get("/", { req, res ->
-        data class InitialData(val notes: List<Note>)
-        data class IndexData(val initialData: InitialData, val bundle: String)
-
-        noteService.findNotes().then {
-            val data = IndexData(
-                    initialData = InitialData(notes = it),
-                    bundle = bundle
-            )
-            res.render("index", data)
-        }
-    })
 
     /**
      * Sockets
@@ -91,7 +71,8 @@ fun main(args: Array<String>) {
             noteService.deleteNote(id)
                 .then {
                     console.log("${socket.handshake.address} deleted note $id")
-                    socket.broadcast.emit("note_deleted", id)
+                    socket.broadcast.emit("delete_note", id)
+                    socket.emit("delete_note", id)
                 }
         })
 

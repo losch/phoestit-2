@@ -1,0 +1,47 @@
+body {
+  text-align: center;
+  background-color: #456;
+  font-family: 'Source Sans Pro', sans-serif;
+}
+
+.App-header {
+  background-color: #000;
+  height: 160px;
+  padding: 20px;
+  color: white;
+}
+
+.App-intro {
+  font-size: large;
+}
+
+.App-ticker {
+  font-size: medium;
+}
+
+.Note {
+    padding: 1px;
+    font-family: 'Source Sans Pro', sans-serif;
+    border: 1px solid #DDD;
+    background-color: #EEE;
+}
+
+.CreateNoteButton {
+    position: absolute;
+    right: 5px;
+    bottom: 5px;
+}
+
+.NoteButtons {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+}
+
+.DeleteNotebutton {
+
+}
+
+.NoteContents {
+
+}

@@ -1,0 +1,17 @@
+group 'phoestit-2'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'kotlin2js'
+
+task buildJs(type: Exec) {
+    executable "yarn"
+    args "build"
+}
+
+task copyTask(type: Copy) {
+    from 'build'
+    into '../backend/build/js/public'
+}
+
+build.dependsOn(buildJs)
+build.finalizedBy(copyTask)

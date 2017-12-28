@@ -1,27 +1,23 @@
 {
-  "name": "phoestit2-frontend",
-  "version": "1.0.0",
-  "main": "index.js",
+  "name": "phoestit-2-frontend",
+  "version": "0.1.0",
   "author": "Ilari Nummila",
-  "license": "MIT",
   "private": true,
   "dependencies": {
-    "@jetbrains/kotlin-extensions": "^1.0.0-pre.16",
-    "@jetbrains/kotlin-react": "^16.2.0-pre.16",
-    "@jetbrains/kotlin-react-dom": "^16.2.0-pre.16",
-    "@types/react-redux": "^5.0.14",
-    "kotlin": "^1.2.10",
-    "kotlinx-html-js": "^0.6.4",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-grid-layout": "^0.16.2",
-    "react-redux": "^5.0.6",
     "redux": "^3.7.2",
-    "socket.io": "^2.0.4",
-    "webpack": "^3.10.0",
-    "webpack-dev-server": "^2.9.7"
+    "socket.io": "^2.0.4"
   },
   "devDependencies": {
-    "ts2kt": "^0.0.20"
+    "react-scripts-kotlin": "2.1.5"
+  },
+  "scripts": {
+    "start": "react-scripts-kotlin start",
+    "build": "react-scripts-kotlin build",
+    "eject": "react-scripts-kotlin eject",
+    "gen-idea-libs": "react-scripts-kotlin gen-idea-libs",
+    "get-types": "react-scripts-kotlin get-types --dest=src/types"
   }
 }

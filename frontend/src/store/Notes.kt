@@ -1,7 +1,7 @@
-package phoestit.store
+package store
 
 import kotlinext.js.jsObject
-import phoestit.model.Note
+import model.Note
 
 val RECEIVED_NOTES = "notes/RECEIVED_NOTES"
 val NOTE_CREATED = "notes/NOTE_CREATED"
