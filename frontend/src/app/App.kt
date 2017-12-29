@@ -42,7 +42,7 @@ class App : RComponent<RProps, RState>() {
             contents = "Uusi lappu",
             x = 12,
             y = 5,
-            height = 1,
+            height = 2,
             width = 1
         )
 

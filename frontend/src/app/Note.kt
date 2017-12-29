@@ -5,10 +5,14 @@ import kotlinx.html.js.onClickFunction
 import model.Note
 import org.w3c.dom.HTMLTextAreaElement
 import react.*
-import react.dom.button
-import react.dom.div
-import react.dom.textArea
-import react.dom.value
+import react.dom.*
+
+@JsModule("react-markdown")
+external val reactMarkdown : RClass<ReactMarkdownProps>
+
+external interface ReactMarkdownProps : RProps {
+    var source: String
+}
 
 interface NoteComponentProps : RProps {
     var note: Note
@@ -26,7 +30,7 @@ class NoteComponent(props: NoteComponentProps) : RComponent<NoteComponentProps, 
     override fun RBuilder.render() {
         val note = props.note
 
-        div {
+        div("NoteBody") {
             div("NoteButtons") {
                 button(classes = "EditNoteButton") {
                     attrs {
@@ -53,7 +57,7 @@ class NoteComponent(props: NoteComponentProps) : RComponent<NoteComponentProps, 
             if (state.isInEditMode) {
                 textArea(classes = "NoteContents") {
                     attrs {
-                        value = note.contents
+                        defaultValue = note.contents
 
                         onChangeFunction = {
                             val target = it.target as HTMLTextAreaElement
@@ -64,13 +68,13 @@ class NoteComponent(props: NoteComponentProps) : RComponent<NoteComponentProps, 
             }
             else {
                 div(classes = "NoteContents") {
-                    +note.contents
+                    reactMarkdown {
+                        attrs.source = note.contents
+                    }
                 }
             }
 
-            div(classes = "NoteDragHandle") {
-
-            }
+            div(classes = "NoteDragHandle") {}
         }
     }
 }

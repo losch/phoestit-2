@@ -13,3 +13,21 @@ buildscript {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
+
+task buildFrontend(type: Exec) {
+    workingDir './frontend'
+    executable "yarn"
+    args "build"
+}
+
+task copyTask(type: Copy) {
+    from 'frontend/build'
+    into 'backend/build/js/public'
+}
+
+copyTask.dependsOn(buildFrontend)
+
+/*
+assemble.dependsOn(buildFrontend)
+assemble.finalizedBy(copyTask)
+*/
