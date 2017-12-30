@@ -4,20 +4,26 @@ import phoestit.model.Note
 import kotlin.js.Promise
 
 class NoteService (private val noteRepository: NoteRepository) {
-    fun findNotes(): Promise<List<Note>> = noteRepository.getNotes()
+    fun findNotes(): Promise<List<Note>> =
+            noteRepository.getNotes()
 
-    fun findNoteById(id: Int): Promise<Note> = noteRepository.findNoteById(id)
+    fun findNoteById(id: Int): Promise<Note> =
+            noteRepository.findNoteById(id)
 
-    fun createNote(note: Note): Promise<Int> = noteRepository.createNote(note)
+    fun createNote(note: Note): Promise<Int> =
+            noteRepository.createNote(note)
 
-    fun updateNote(id: Int, note: Note): Promise<Note> = noteRepository.updateNote(id, note)
+    fun updateNote(id: Int, note: Note): Promise<Note> =
+            noteRepository.updateNote(id, note)
 
-    fun updateNoteContents(id: Int, contents: String): Promise<Note> = noteRepository.updateNoteContents(id, contents)
+    fun updateNoteContents(id: Int, contents: String): Promise<Note> =
+            noteRepository.updateNoteContents(id, contents)
 
     fun moveNote(id: Int, x: Int, y: Int, width: Int, height: Int): Promise<Int> =
             noteRepository.moveNote(id, x, y, width, height)
 
-    fun deleteNote(id: Int): Promise<Int> = noteRepository.deleteNote(id)
+    fun deleteNote(id: Int): Promise<Int> =
+            noteRepository.deleteNote(id)
 
     fun updateNoteByApiId(apiId: String, contents: String): Promise<Note> =
             noteRepository.updateNoteByApiId(apiId, contents)

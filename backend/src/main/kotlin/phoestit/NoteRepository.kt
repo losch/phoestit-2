@@ -56,7 +56,6 @@ class NoteRepository {
         knex("notes")
             .where(json("apiId" to apiId))
             .update(json("contents" to contents))
-            .returning("*")
 
     init {
         knex.schema.createTableIfNotExists("notes") { table ->

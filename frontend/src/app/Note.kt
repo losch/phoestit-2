@@ -40,7 +40,7 @@ class NoteComponent(props: NoteComponentProps) : RComponent<NoteComponentProps, 
                             }
                         }
                     }
-                    if (state.isInEditMode) +"Valmis" else +"Muokkaa"
+                    if (state.isInEditMode) +"OK" else +"E"
                 }
 
                 button(classes = "DeleteNoteButton") {

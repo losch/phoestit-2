@@ -1,5 +1,6 @@
 package app
 
+import api.SocketResponse
 import react.*
 import react.dom.*
 import store.*
@@ -16,21 +17,23 @@ class App : RComponent<RProps, RState>() {
             forceUpdate()
         }
 
+        console.log(SocketResponse.NOTES.event)
+
         // Connect sockets
 
-        socket.on("notes") { notes ->
+        socket.on(SocketResponse.NOTES.event) { notes ->
             store.dispatch(notesReceivedAction(notes))
         }
 
-        socket.on("create_note") { note ->
+        socket.on(SocketResponse.NOTE_CREATED.event) { note ->
             store.dispatch(noteCreatedAction(note))
         }
 
-        socket.on("update_note") { note ->
+        socket.on(SocketResponse.NOTE_UPDATED.event) { note ->
             store.dispatch(noteUpdatedAction(note))
         }
 
-        socket.on("delete_note") { id ->
+        socket.on(SocketResponse.NOTE_DELETED.event) { id ->
             store.dispatch(noteDeletedAction(id))
         }
     }

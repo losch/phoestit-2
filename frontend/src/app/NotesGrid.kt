@@ -63,8 +63,6 @@ fun RBuilder.notesGrid(notes: Array<Note>) {
             layout = notes.map { createNoteLayout(it) }.toTypedArray()
             draggableHandle = ".NoteDragHandle"
             onLayoutChange = { layouts ->
-                console.log("*** layouts", layouts)
-
                 layouts.forEach { layout ->
                     notes.find { "${it.id}" == layout.i }
                         ?.let {
