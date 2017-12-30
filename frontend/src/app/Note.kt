@@ -6,6 +6,7 @@ import model.Note
 import org.w3c.dom.HTMLTextAreaElement
 import react.*
 import react.dom.*
+import kotlin.browser.window
 
 @JsModule("react-markdown")
 external val reactMarkdown : RClass<ReactMarkdownProps>
@@ -27,11 +28,33 @@ class NoteComponent(props: NoteComponentProps) : RComponent<NoteComponentProps, 
         isInEditMode = false
     }
 
+    private fun editApiId() {
+        val newId = window.prompt("Uusi API-ID?", props.note.apiId ?: "")
+
+        if (newId != null) {
+            console.log("Updating api id", newId)
+            api.updateNoteApiId(props.note.id!!, newId)
+        }
+    }
+
     override fun RBuilder.render() {
         val note = props.note
 
         div("NoteBody") {
             div("NoteButtons") {
+                button(classes = "ApiIdNoteButton") {
+                    attrs {
+                        onClickFunction = {
+                            editApiId()
+                        }
+                    }
+
+                    +"#"
+                    if (!note.apiId.isNullOrEmpty()) {
+                        +"${note.apiId}"
+                    }
+                }
+
                 button(classes = "EditNoteButton") {
                     attrs {
                         onClickFunction = {

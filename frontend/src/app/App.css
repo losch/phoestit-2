@@ -27,6 +27,11 @@ body {
     box-shadow: 2px 2px 2px #333;
 }
 
+.Note.HasApiId {
+    background-color: #CCE;
+    border: 1px solid #CCC;
+}
+
 .NoteBody {
     height: 100%;
     width: 100%;

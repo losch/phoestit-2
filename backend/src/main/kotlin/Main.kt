@@ -13,6 +13,7 @@ enum class SocketRequest(val event: String) {
     CREATE_NOTE("create_note"),
     UPDATE_NOTE("update_note"),
     UPDATE_NOTE_CONTENTS("update_note_contents"),
+    UPDATE_NOTE_API_ID("update_note_api_id"),
     MOVE_NOTE("move_note"),
     DELETE_NOTE("delete_note")
 }
@@ -52,55 +53,52 @@ fun main(args: Array<String>) {
         }
 
         socket.on(SocketRequest.CREATE_NOTE.event, { note ->
-            noteService.createNote(note).then { id ->
-                console.log("${socket.handshake.address} created note $id")
-                noteService.findNoteById(id)
-            }
-            .then {
-                io.emit(SocketResponse.NOTE_CREATED.event, it)
-            }
+            noteService.createNote(note)
+                    .then { newNote ->
+                        console.log("${socket.handshake.address} created note ${newNote.id}")
+                        io.emit(SocketResponse.NOTE_CREATED.event, newNote)
+                    }
         })
 
         socket.on(SocketRequest.UPDATE_NOTE.event, { note ->
             console.log("${socket.handshake.address} updates note", note)
             noteService.updateNote(note.id, note)
-                .then {
-                    noteService.findNoteById(note.id)
-                }
-                .then {
-                    io.emit(SocketResponse.NOTE_UPDATED.event, it)
-                }
+                    .then {
+                        io.emit(SocketResponse.NOTE_UPDATED.event, it)
+                    }
         })
 
         socket.on(SocketRequest.UPDATE_NOTE_CONTENTS.event, { note ->
             noteService.updateNoteContents(note.id, note.contents)
-                .then {
-                    noteService.findNoteById(note.id)
-                }
-                .then {
-                    io.emit(SocketResponse.NOTE_UPDATED.event, it)
-                }
+                    .then {
+                        io.emit(SocketResponse.NOTE_UPDATED.event, it)
+                    }
+        })
+
+        socket.on(SocketRequest.UPDATE_NOTE_API_ID.event, { note ->
+            console.log("${socket.handshake.address} updates note's api ID", note)
+            noteService.updateNoteApiId(note.id, note.apiId)
+                    .then {
+                        io.emit(SocketResponse.NOTE_UPDATED.event, it)
+                    }
         })
 
         socket.on(SocketRequest.MOVE_NOTE.event, { note ->
             noteService.moveNote(note.id, note.x, note.y, note.width, note.height)
-                .then {
-                    noteService.findNoteById(note.id)
-                }
-                .then {
-                    io.emit(SocketResponse.NOTE_UPDATED.event, it)
-                }
+                    .then {
+                        io.emit(SocketResponse.NOTE_UPDATED.event, it)
+                    }
         })
 
         socket.on(SocketRequest.DELETE_NOTE.event, { id ->
             noteService.deleteNote(id)
-                .then {
-                    console.log("${socket.handshake.address} deleted note $id")
-                    io.emit(SocketResponse.NOTE_DELETED.event, id)
-                }
+                    .then {
+                        console.log("${socket.handshake.address} deleted note $id")
+                        io.emit(SocketResponse.NOTE_DELETED.event, id)
+                    }
         })
 
-        socket.on("disconnect", {
+        socket.on(SocketRequest.DISCONNECTED.event, {
             console.log("${socket.handshake.address} disconnected")
         })
     })
@@ -130,6 +128,7 @@ fun main(args: Array<String>) {
         val note = req.body as Note
         noteService.createNote(note)
                 .then { result ->
+                    io.emit(SocketResponse.NOTE_CREATED.event, note)
                     res.type("application/json")
                     res.send(result)
                 }
@@ -140,11 +139,11 @@ fun main(args: Array<String>) {
         val apiId = req.params.apiId
         val contents = res.body.contents
         noteService.updateNoteByApiId(apiId, contents)
-            .then { note ->
-                io.emit("update_note", note)
-                res.type("application/json")
-                res.send(note)
-            }
+                .then { note ->
+                    io.emit(SocketResponse.NOTE_UPDATED.event, note)
+                    res.type("application/json")
+                    res.send(note)
+                }
     })
 
     /**

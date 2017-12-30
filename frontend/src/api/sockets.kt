@@ -2,6 +2,7 @@ package api
 
 import app.LayoutInterface
 import model.Note
+import model.NoteApiId
 import model.NoteContents
 import model.NotePositionDimension
 
@@ -16,6 +17,10 @@ fun createNote(note: Note) {
 
 fun deleteNote(id: Int) {
     socket.emit(SocketRequest.DELETE_NOTE.event, id)
+}
+
+fun updateNoteApiId(id: Int, apiId: String) {
+    socket.emit(SocketRequest.UPDATE_NOTE_API_ID.event, NoteApiId(id, apiId))
 }
 
 fun updateNoteContents(id: Int, contents: String) {
@@ -39,6 +44,7 @@ enum class SocketRequest(val event: String) {
     CREATE_NOTE("create_note"),
     UPDATE_NOTE("update_note"),
     UPDATE_NOTE_CONTENTS("update_note_contents"),
+    UPDATE_NOTE_API_ID("update_note_api_id"),
     MOVE_NOTE("move_note"),
     DELETE_NOTE("delete_note")
 }

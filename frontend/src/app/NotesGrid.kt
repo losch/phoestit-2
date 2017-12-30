@@ -70,7 +70,7 @@ fun RBuilder.notesGrid(notes: Array<Note>) {
                                 layout.y != it.y ||
                                 layout.w != it.width ||
                                 layout.h != it.height) {
-                                console.log("**** moving note", it)
+
                                 api.moveNote(it.id!!, layout)
                             }
                         }
@@ -79,7 +79,9 @@ fun RBuilder.notesGrid(notes: Array<Note>) {
         }
 
         notes.map {
-            div("Note") {
+            val classes = if (it.apiId.isNullOrEmpty()) "Note"
+                          else "Note HasApiId"
+            div(classes) {
                 attrs {
                     key = "${it.id}"
                 }

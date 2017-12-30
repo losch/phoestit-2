@@ -14,6 +14,11 @@ data class NoteContents(
         val contents: String
 )
 
+data class NoteApiId(
+        val id: Int,
+        val apiId: String
+)
+
 data class NotePositionDimension(
         val id: Int,
         val x: Int,

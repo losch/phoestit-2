@@ -22,18 +22,30 @@ class NoteRepository {
             .where(json("id" to id))
             .then { notes -> notes[0] }
 
+    fun findNoteByApiId(apiId: String): Promise<Note> =
+        knex("notes")
+            .select("*")
+            .where(json("apiId" to apiId))
+            .then { notes -> notes[0] }
+
     fun createNote(note: Note): Promise<Int> =
         knex("notes")
             .insert(note)
             .returning("id")
             .then { ids -> ids[0] }
 
-    fun updateNote(id: Int, note: Note): Promise<Note> =
+    fun updateNote(id: Int, note: Note): Promise<Int> =
         knex("notes")
             .where(json("id" to id))
             .update(note)
 
-    fun updateNoteContents(id: Int, contents: String): Promise<Note> =
+
+    fun updateNoteApiId(id: Int, apiId: String): Promise<Int> =
+        knex("notes")
+            .where(json("id" to id))
+            .update(json("apiId" to apiId))
+
+    fun updateNoteContents(id: Int, contents: String): Promise<Int> =
         knex("notes")
             .where(json("id" to id))
             .update(json("contents" to contents))
